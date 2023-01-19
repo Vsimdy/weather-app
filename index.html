@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #575858;
+        }
+        
+        .container-fluid {
+            max-width: 410px;
+            margin: 50px auto;
+            padding: 10px;
+        }
+        
+        h3 {
+            text-align: center;
+            box-shadow: 0px -4px 2px black;
+            text-shadow: 2px 4px 2px black, -2px -2px 2px black;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+            color: whitesmoke;
+            padding: 10px;
+            background-color: rgb(61, 60, 60);
+            letter-spacing: 5px;
+        }
+        
+        .inputs {
+            padding: 2rem 0 2rem 0;
+            text-align: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 400px;
+            max-width: 1000px;
+            margin: 0 auto;
+            box-shadow: 14px 14px 2px black, -5px 14px 2px black;
+            border-top-left-radius: 50%;
+            border-top-right-radius: 50%;
+        }
+        
+        .inputs input[type="text"] {
+            height: 3rem;
+            max-width: 300px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 10px;
+            border: none;
+            border-radius: 2px;
+            margin-right: 4px;
+            background-color: rgb(245, 245, 235);
+        }
+        
+        .inputs input[type="submit"] {
+            background: rgb(61, 60, 60);
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            color: rgb(248, 244, 244);
+            letter-spacing: 2px;
+            text-shadow: 2px 1px rgb(12, 53, 41);
+            margin-top: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 2px 1px 3px rgb(10, 10, 10), -2px -2px 3px rgb(7, 7, 7);
+            transition: 1s;
+        }
+        
+        .inputs input[type="submit"]:hover {
+            transform: scale(90%);
+            box-shadow: 4px 1px 2px rgb(143, 238, 163);
+            color: #08d8f8;
+            text-shadow: 2px 2px black;
+        }
+        
+        .display {
+            text-align: center;
+            width: 70%;
+            min-height: 50vh;
+            max-width: 500px;
+            margin: 0 auto;
+            padding-top: 20px;
+            background-color: #575858;
+            box-shadow: 14px 14px 2px black, -5px 14px 2px black;
+        }
+        
+        .wrapper {
+            background-color: whitesmoke;
+            min-height: 40vh;
+            width: 80%;
+            margin: 0 auto;
+            border-radius: 30px;
+            box-shadow: 0px 0px 20px gainsboro;
+        }
+        
+        .wrapper h2 {
+            padding: 5px 0;
+            text-align: center;
+            width: 90%;
+            background: whitesmoke;
+            box-shadow: 0px 0px 10px gainsboro;
+            color: rgb(80, 79, 79);
+            font-family: sans-serif;
+            font-weight: 900;
+            position: relative;
+            top: 5px;
+            margin: 0 auto;
+            border-top-right-radius: 30px;
+            border-top-left-radius: 30px;
+        }
+        
+        .wrapper p {
+            margin: 50px auto;
+            min-height: 30px;
+            padding: 5px;
+            text-align: left;
+            color: white;
+            font-size: 23px;
+            width: 80%;
+            border-radius: 5px;
+            background-color: rgb(61, 60, 60);
+            box-shadow: 0px 2px 2px black;
+        }
+        
+        .wrapper h2 span {
+            font-weight: 900;
+            font-style: italic;
+            color: #08d8f8;
+        }
+        
+        .wrapper p span {
+            color: #08d8f8;
+            font-size: 25px;
+        }
+        
+        .disc {
+            text-align: center;
+            color: whitesmoke;
+            font-style: italic;
+            font-weight: 900;
+            font-size: 20px;
+            margin-top: 2%;
+            text-shadow: 4px 4px black;
+            word-spacing: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <section class="main">
+        </section>
+        <h3>WEATHER APPLICATION</h3>
+    </div>
+
+    <section class="inputs">
+
+        <input type="text" placeholder="Enter any city..." id="cityinput">
+        <input type="submit" value="Get Weather Detail" id="add">
+
+
+    </section>
+
+    <section class="display">
+        <div class="wrapper">
+            <h2 id="cityoutput"></h2>
+            <p id="description"></p>
+            <p id="temp"></p>
+            <p id="wind"></p>
+        </div>
+    </section>
+
+    <p class="disc">Discover The Weather Of Any City In The World.</p>
+
+    <script>
+        var inputval = document.querySelector('#cityinput')
+        var btn = document.querySelector('#add');
+        var city = document.querySelector('#cityoutput')
+        var descrip = document.querySelector('#description')
+        var temp = document.querySelector('#temp')
+        var wind = document.querySelector('#wind')
+
+
+        apik = "3045dd712ffe6e702e3245525ac7fa38"
+
+        //kelvin to celcious. 1 Kelvin is equal to -272.15 Celsius.
+
+        function convertion(val) {
+            return (val - 273).toFixed(2)
+        }
+        //Now we have to collect all the information with the help of fetch method
+
+        btn.addEventListener('click', function() {
+
+                
+
+                //Now the condition must be added that what if you do not input anything in the input box.
+                if(inputval.value === null || inputval.value === ""){
+                    alert("Enter Valid City")
+                }
+                
+                else{
+                    //This is the api link from where all the information will be collected
+
+                fetch('https://api.openweathermap.org/data/2.5/weather?q=' + inputval.value + '&appid=' + apik)
+                    .then(res => res.json())
+
+                //.then(data => console.log(data))
+
+                .then(data => {
+
+                    //Now you need to collect the necessary information with the API link. Now I will collect that information and store it in different constants.
+
+                    var nameval = data['name']
+                    var descrip = data['weather']['0']['description']
+                    var tempature = data['main']['temp']
+                    var wndspd = data['wind']['speed']
+                        //Now with the help of innerHTML you have to make arrangements to display all the information in the webpage.
+                    city.innerHTML = `Weather of <span>${nameval}<span>`
+                    temp.innerHTML = `Temperature: <span>${ convertion(tempature)} C</span>`
+                    description.innerHTML = `Sky Conditions: <span>${descrip}<span>`
+                    wind.innerHTML = `Wind Speed: <span>${wndspd} km/h<span>`
+
+                })
+                }
+            })
+            //If you click on the submit button without inputting anything in the input box or typing the wrong city name then the above text can be seen.
+    </script>
+</body>
+
+</html>
